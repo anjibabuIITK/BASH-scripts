@@ -1,5 +1,5 @@
 # BASH-scripts
-Some Useful Bash scripts
+Some of my useful Bash scripts
 
 By
 
