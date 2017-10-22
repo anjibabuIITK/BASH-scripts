@@ -1,3 +1,8 @@
+# BASH SCRIPT TO PRINT NODE STATUS OF QUEUE IN REMOTE SERVER.
+#
+# AUTHOUR : ANJI BABU KAPAKAYALA
+#             IIT KANPUR,INDIA.
+#
 #!/bin/bash
 now=$(date +"%e %b %y, %a %r")
 num=`pbsnodes|grep "np ="|wc -l`
