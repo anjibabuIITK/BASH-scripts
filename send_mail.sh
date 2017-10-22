@@ -1,3 +1,9 @@
+# Bash Script to send mails from terminal by using mutt package.
+#
+# Authour :  ANJI BABU KAPAKAYALA
+#             IIT KANPUR, INDIA.
+# USAGE   : sh send_mail.sh (Then follow instructionns)
+#
 #!/bin/bash
 #Inorder to use this script , mutt package should be installed with proper configuration.
 #this script will send mail to given gmail for given option (subject,message,gmailid,ect.)
