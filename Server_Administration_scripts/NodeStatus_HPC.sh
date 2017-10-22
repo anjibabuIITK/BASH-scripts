@@ -1,3 +1,8 @@
+# Bash script to print remote server nodes status for given queue.
+#
+# Authour : ANJI BABU KAPAKAYALA
+#             IIT KANPUR, INDIA.
+#
 #!/bin/bash
 now=$(date +"%e %b %y, %a %r")
 read -p "Enter queue: " queue
