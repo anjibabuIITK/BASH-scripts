@@ -1,3 +1,10 @@
+# Bash Script to create passwordless login for remote servers.
+#
+# AUTHOUR  :  ANJI BABU KAPAKAYALA
+#              IIT KANPUR, INDIA.
+#
+# USAGE    : sh ssh_keygen_script.sh (Then follow instructions)
+#
 #!/bin/bash
 echo "==================================================="
 echo -e "\e[31;44m*****WELCOME TO ANJI BABU SCRIPTING SERVICE *****\e[0m"
@@ -9,7 +16,7 @@ read -p "Eneter remote server username: " user
 read -p "Eneter remote server IP: " serverip
 echo -e "\e[31;44m  If files are already exits, then dont over write. press n \e[0m"
 ssh-keygen -t rsa
-#STEP2
+#STEP2 
 #Create .ssh directory on remote  server
 echo -e "\e[31;44m  Plese Enter your semote server Password \e[0m"
 ssh $user@$serverip mkdir -p .ssh
