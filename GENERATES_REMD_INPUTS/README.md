@@ -2,13 +2,14 @@
  
  
  AUTHOUR : KAPAKAYALA ANJI BABU
+ 
            IIT KANPUR, INDIA.
            
 
  INPUT   : test.gro , test.mdp , test.top 
  
 
- USAGE   : sh make_inputs.sh -i 300.0 -f 350.0 -d 2.0 -n 15000000 -g "test.gro" -m "test.mdp"
+      USAGE   : sh make_inputs.sh -i 300.0 -f 350.0 -d 2.0 -n 15000000 -g "test.gro" -m "test.mdp"
 
  
  FLAGS   :
