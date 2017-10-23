@@ -16,7 +16,7 @@ HOSTNAME=$(hostname)
 USER=$(logname)
 NOW=$(date +"%e %b %Y, %a %r")
 me="anjibabu"
-myip='172.26.30.147'
+myip='172.2.0.1'
 cat > filesms << EOF1
 HPC2013 : Hello,$USER from $IP logged into Your HPC-2013 on $NOW .
 EOF1
