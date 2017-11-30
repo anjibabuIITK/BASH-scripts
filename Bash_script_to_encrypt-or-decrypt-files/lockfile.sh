@@ -14,7 +14,7 @@ bold=`tput bold`
 rst=`tput sgr0`
 #echo " $bold $red RED $ylw YELLOW $blue BLUE $pur PURPLE $rst"
 #-------------------
-which gjpg &> /dev/null
+which gpg &> /dev/null
 if [ $? -ne 0 ];then
 echo;echo "$bold $red -------------------------------------------------------- $rst"
 echo " $bold $ylw Install $red pinentry-gtk$rst $bold $ylw package to use this script. $rst"
