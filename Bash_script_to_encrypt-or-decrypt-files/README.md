@@ -15,7 +15,7 @@
          output  :   filename.anji,if given argument is file.
                      filename.tar.gz.anji,if given argument is directory.
          
-# Decrypt a given file or directory    [ Unlock ]
+# Decrypt a given encrypted file or directory    [ Unlock ]
 
          Usage   :  sh unlock.sh {filename.anji}
          
