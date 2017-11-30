@@ -54,7 +54,7 @@ echo "---------------------------------------------------";echo
 which gpg &> /dev/null
 if [ $? -ne 0 ];then
 echo "---------------------------------------------------"
-echo "$bold $ylw Install $red getpin-gtk$rst $bold $ylw package to use this script.$rst"
+echo "$bold $ylw Install $red getpinentry-gtk$rst $bold $ylw package to use this script.$rst"
 echo "$bold $red Thanks. Bye.$rst";booter;exit
 else
 if [[ -d $file ]];then
