@@ -16,7 +16,7 @@
 
 
                    
-        **USAGE:**
+        USAGE:
 
         CASE 1: Installing GROMACS patching eith plumed
 
@@ -34,7 +34,7 @@
         sh Install_gromacs.sh -f gromacs-5.1.2.tar.gz 
 
 	
-	CASE 4: For getting HELP
-	sh Install_gromacs.sh -h help
+	  CASE 4: For getting HELP
+ 	  sh Install_gromacs.sh -h help
  
                     
