@@ -33,5 +33,9 @@
         CASE 3: Installing GROMACS without patching plumed mpi version
         sh Install_gromacs.sh -f gromacs-5.1.2.tar.gz 
 
+	
+	CASE 4: For getting HELP
+	sh Install_gromacs.sh -h help
+
  
                     
