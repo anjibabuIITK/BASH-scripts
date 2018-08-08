@@ -11,7 +11,8 @@
          Usage   :  sh install_plumed.sh <zipfile|tarfile>    
        
 
-# INSTALLATION OF GROMACS [Serial | mpi | plumed-patched ]  
+# INSTALLATION OF GROMACS
+## [Serial | mpi | plumed-patched ]  
 
 
                    
@@ -19,7 +20,7 @@
 
         CASE 1: Installing GROMACS patching eith plumed
 
-        *sh Install_gromacs.sh -f gromacs-5.1.2.tar.gz -p plumed*
+        sh Install_gromacs.sh -f gromacs-5.1.2.tar.gz -p plumed
  
 
  
