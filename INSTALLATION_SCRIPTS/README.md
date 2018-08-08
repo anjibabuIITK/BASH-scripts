@@ -34,8 +34,7 @@
         sh Install_gromacs.sh -f gromacs-5.1.2.tar.gz 
 
 	
-		CASE 4: For getting HELP
-		sh Install_gromacs.sh -h help
-
+	CASE 4: For getting HELP
+	sh Install_gromacs.sh -h help
  
                     
