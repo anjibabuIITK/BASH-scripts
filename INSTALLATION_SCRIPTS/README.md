@@ -1,4 +1,4 @@
-# Encrypt or Decrypt given File or Directory
+# INSTALLATION OF PLUMED
 
          Bash Script to Install Plumed package.
          
