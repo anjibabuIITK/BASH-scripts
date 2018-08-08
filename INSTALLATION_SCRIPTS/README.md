@@ -1,4 +1,4 @@
-# INSTALLATION OF PLUMED
+#               INSTALLATION OF PLUMED
 
          
          Authour :  **KAPAKAYALA ANJI BABU**
@@ -11,8 +11,8 @@
          Usage   :  sh install_plumed.sh <zipfile|tarfile>    
        
 
-# INSTALLATION OF GROMACS
-## [Serial | mpi | plumed-patched ]  
+#               INSTALLATION OF GROMACS
+##          [Serial | mpi | plumed-patched ]  
 
 
                    
