@@ -115,7 +115,6 @@ echo "GROMACS Installing Without MPI "
 echo "GROMACS Installing with MPI "
 ;;
 esac
-exit
 #=============================#
  if [ $? -eq '0' ];then                  #---------------- IF 1 starts
  echo " Gromacs Configured Successfully. !"
