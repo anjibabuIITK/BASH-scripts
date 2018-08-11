@@ -61,7 +61,7 @@ echo "$file found "
 
 echo "$file Extracted. !"
 else
-echo "$file was not found.!"
+echo "$file was not found.!";exit
 fi
  }
 #---------------------
@@ -75,7 +75,7 @@ rm null
 #============================#
 #   PATCHING WITH PLUMED     #
 #============================#
-plumed-patch -p << EOF
+plumed-patch -p &>null << EOF
 4
 EOF
 if [ $? -eq '0' ];then
@@ -97,8 +97,6 @@ esac
 #-------------------------------
 function install_gromacs() {
 path=`pwd`
-#mpi=$2
-echo " MPI= $1"
 mkdir build
 cd build
 case "$1" in
@@ -106,22 +104,22 @@ case "$1" in
 #==================================================#
 #   Compiling Gromacs with CMAKE [Serial Version]  #
 #==================================================#
-/home/anjibabu/Softwares/cmake-3.6.2/bin/cmake .. -DCMAKE_INSTALL_PREFIX=$path -DGMX_MPI=off -DCMAKE_C_COMPILER=mpicc -DCMAKE_CXX_COMPILER=mpicxx -DGMX_PREFER_STATIC_LIBS=ON -DGMX_FFT_LIBRARY=fftpack
+/home/anjibabu/Softwares/cmake-3.6.2/bin/cmake .. -DCMAKE_INSTALL_PREFIX=$path -DGMX_MPI=off -DCMAKE_C_COMPILER=mpicc -DCMAKE_CXX_COMPILER=mpicxx -DGMX_PREFER_STATIC_LIBS=ON -DGMX_FFT_LIBRARY=fftpack &>null
 echo "GROMACS Installing Without MPI "
 ;;
 *)
 # Compiling gromacs with mpi by default
-/home/anjibabu/Softwares/cmake-3.6.2/bin/cmake .. -DCMAKE_INSTALL_PREFIX=$path -DGMX_MPI=on -DCMAKE_C_COMPILER=mpicc -DCMAKE_CXX_COMPILER=mpicxx -DGMX_PREFER_STATIC_LIBS=ON -DGMX_FFT_LIBRARY=fftpack
+/home/anjibabu/Softwares/cmake-3.6.2/bin/cmake .. -DCMAKE_INSTALL_PREFIX=$path -DGMX_MPI=on -DCMAKE_C_COMPILER=mpicc -DCMAKE_CXX_COMPILER=mpicxx -DGMX_PREFER_STATIC_LIBS=ON -DGMX_FFT_LIBRARY=fftpack &>null
 echo "GROMACS Installing with MPI "
 ;;
 esac
 #=============================#
  if [ $? -eq '0' ];then                  #---------------- IF 1 starts
  echo " Gromacs Configured Successfully. !"
-  make -j 10
+  make -j 10 &>null
         if [ $? -eq '0' ];then           #---------------- IF 2 Starts
  	echo " Gromacs Compiled Successfully. !"
-        make install
+        make install &>null
         if [ $? -eq '0' ];then           #---------------- IF 3 Starts
         echo " Gromacs Installed Successfully.!"
          cat >> ~/.bashrc << EOF3
@@ -131,20 +129,20 @@ esac
           #-----------------------------#
 EOF3
        else
-       echo " Gromacs Installation Failed" #-------------- IF 3 Ends
+       echo " Gromacs Installation Failed";exit #--------- IF 3 Ends
        fi   
   else
-  echo " Gromacs Compilation failed. ! "
+  echo " Gromacs Compilation failed. ! ";exit
   fi                                      #--------------- IF 2 Ends
 else
-echo " Gromacs Configuration failed. !"   #--------------- IF1 ends
+echo " Gromacs Configuration failed. !" ;exit #----------- IF1 ends
 fi
 }
 #----------------------------------------------------------
 # CONSTRUCTING  HELP COMMAND
 function help_usage() {
-case "$1" in
- h|help|usage|*)
+#case "$1" in
+#h|help|usage)
 cat << EOF
 
  
@@ -163,9 +161,15 @@ cat << EOF
 	sh Install_gromacs.sh -f gromacs-5.1.2.tar.gz 
 
 EOF
-;;
-esac
+#;;
+#*) echo "UNKNOWN KWY WORD" ;exit;;
+#esac
 }
+#--------------------------------------------
+case "$1" in
+   --help|--usage) header " BASH SCRIPT TO INSTALL GROMACS WITH FEW OPTIONS "
+help_usage;exit ;;
+esac
 #--------------------------------------------
 #     Defining ARGUMENTS
 while getopts f:p:m:h: option
@@ -178,9 +182,6 @@ h) helpp=${OPTARG};;
 esac
 done
 #-------------------------------MAIN PROGRAM
-case "$helpp" in
-   *) header " BASH SCRIPT TO INSTALL GROMACS WITH FEW OPTIONS "
-help_usage $helpp;exit ;;esac
 header "GROMACS INSTALLATION"
 cmake_test 
 extract_file $tarfile 
