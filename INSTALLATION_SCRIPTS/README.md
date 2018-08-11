@@ -18,6 +18,9 @@
                    
         **USAGE:**
 
+	CASE 0: Need hekp ?
+	sh Install_gromacs.sh --help
+
         CASE 1: Installing GROMACS patching eith plumed
 
         sh Install_gromacs.sh -f gromacs-5.1.2.tar.gz -p plumed
@@ -32,8 +35,8 @@
 
         CASE 3: Installing GROMACS without patching plumed mpi version
         sh Install_gromacs.sh -f gromacs-5.1.2.tar.gz 
-
-	CASE 4: Need hekp ?
-	sh Install_gromacs.sh --help
+	
+	CASE 4: Install Plumed with mpi (default)
+	sh Install_gromacs.sh -f plumed.zip -i install_plumed
  
                     
