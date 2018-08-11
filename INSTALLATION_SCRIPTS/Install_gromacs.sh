@@ -1,14 +1,26 @@
-# USAGE:
+# Bash Script to install gromacs and path with Plumed
+#
+#
+#  Authour : ANJI BABU KAPAKAYALA
+#		C/O Prof. Nisanth N. Nair
+#		Dept. Of Chemistry
+#		IIT Kanpur, India.
+#
+#  USAGE:
+# 
+#  CASE0: Need Help ?
+#	  sh Install_gromacs.sh --help
+#
 #  CASE 1: Installing GROMACS patching eith plumed
-#      sh Install_gromacs.sh -f gromacs-5.1.2.tar.gz -p plumed 
+#         sh Install_gromacs.sh -f gromacs-5.1.2.tar.gz -p plumed 
 # 
 #  CASE 2: Installing GROMACS without mpi [serial version]
-#      sh Install_gromacs.sh -f gromacs-5.1.2.tar.gz -m serial
+#         sh Install_gromacs.sh -f gromacs-5.1.2.tar.gz -m serial
 #
 #  CASE 3: Installing GROMACS without patching plumed mpi version
-#     sh Install_gromacs.sh -f gromacs-5.1.2.tar.gz 
+#         sh Install_gromacs.sh -f gromacs-5.1.2.tar.gz 
 #
-#
+#------------------------------------------------------------------#
 #!/bin/bash
 red=$(tput setaf 1)
 grn=$(tput setaf 2)
@@ -25,19 +37,19 @@ now=$(date +"%D %r")
 # Purpose - Display header message
 function header(){
 local h="$@"
-echo "---------------------------------------------------------------"
+echo "$bold $red---------------------------------------------$rst"
 echo "$bold $red       ${h}                  $reset"
-echo "---------------------------------------------------------------"
+echo "$bold $red---------------------------------------------$rst"
 }
 #------------------------------------
 function cmake_test() {
 #cmake --version &>null
 /home/anjibabu/Softwares/cmake-3.6.2/bin/cmake --version &>null
 if [ $? -eq '0' ];then
-echo "CMAKE  OK. !"
+echo "$bold $grn CMAKE  OK. ! $rst"
 rm null
 else
-echo "CMAKE  NOT FOUND.!"
+echo "$bold $red CMAKE  NOT FOUND.! $rst"
 rm null
 exit
 fi
@@ -46,7 +58,7 @@ fi
 function extract_file() {
 file=$1
 if [ -f $file ];then               #------------ if1 starts
-echo "$file found "
+echo "$bold $grn $file found $rst"
 	extension="${file##*.}"
 		case $extension in
 			zip)
@@ -56,12 +68,12 @@ echo "$file found "
 			tar -xvf $file &>null
 			folder=`basename $file .tar.gz`;;
 		        *)
-		        echo "Unknown or NEW extension of file";;
+		        echo "$bold $red Unknown or NEW extension of file $rst";;
 			esac
 
-echo "$file Extracted. !"
+echo "$bold $grn $file Extracted. !$rst"
 else
-echo "$file was not found.!";exit
+echo "$bold $red $file was not found.!$rst";exit
 fi
  }
 #---------------------
@@ -70,7 +82,7 @@ case "$1" in
  plumed)
 plumed -h &>null
 if [ $? -eq '0' ];then
-echo "Plumed Found. !"
+echo "$bold $grn Plumed Found. !$rst"
 rm null
 #============================#
 #   PATCHING WITH PLUMED     #
@@ -79,12 +91,12 @@ plumed-patch -p &>null << EOF
 4
 EOF
 if [ $? -eq '0' ];then
-echo "Plumed patched";
+echo "$bold $grn Plumed patched $rst";
 else
-echo "ERROR in Patching"
+echo "$bold $red ERROR in Patching $rst"
 fi
 else
-echo "Plumed  NOT FOUND.!"
+echo "$bold $red Plumed  NOT FOUND.! $rst"
 rm null
 exit
 fi;;
@@ -104,38 +116,40 @@ case "$1" in
 #==================================================#
 #   Compiling Gromacs with CMAKE [Serial Version]  #
 #==================================================#
+echo "$bold $grn GROMACS Installing Without MPI $rst"
 /home/anjibabu/Softwares/cmake-3.6.2/bin/cmake .. -DCMAKE_INSTALL_PREFIX=$path -DGMX_MPI=off -DCMAKE_C_COMPILER=mpicc -DCMAKE_CXX_COMPILER=mpicxx -DGMX_PREFER_STATIC_LIBS=ON -DGMX_FFT_LIBRARY=fftpack &>null
-echo "GROMACS Installing Without MPI "
 ;;
 *)
 # Compiling gromacs with mpi by default
+echo "$bold $grn GROMACS Installing with MPI $rst"
 /home/anjibabu/Softwares/cmake-3.6.2/bin/cmake .. -DCMAKE_INSTALL_PREFIX=$path -DGMX_MPI=on -DCMAKE_C_COMPILER=mpicc -DCMAKE_CXX_COMPILER=mpicxx -DGMX_PREFER_STATIC_LIBS=ON -DGMX_FFT_LIBRARY=fftpack &>null
-echo "GROMACS Installing with MPI "
 ;;
 esac
 #=============================#
  if [ $? -eq '0' ];then                  #---------------- IF 1 starts
- echo " Gromacs Configured Successfully. !"
+ echo "$bold $grn Gromacs Configured Successfully. ! $rst"
+ echo "$bold $grn Gromacs Compiling......[$red Please Wait $rst $grn ] ! $rst"
   make -j 10 &>null
         if [ $? -eq '0' ];then           #---------------- IF 2 Starts
- 	echo " Gromacs Compiled Successfully. !"
+ 	echo "$bold $grn Gromacs Compiled Successfully. ! $rst"
+        echo "$bold $grn Gromacs Installing......[$red Please Wait $rst $grn ] ! $rst"
         make install &>null
         if [ $? -eq '0' ];then           #---------------- IF 3 Starts
-        echo " Gromacs Installed Successfully.!"
+        echo "$bold $grn Gromacs Installed Successfully.! $rst"
          cat >> ~/.bashrc << EOF3
-          #-----------------------------#
-          #GROMACS ENVIRONMENT
-           export PATH=\$PATH:$path/bin
-          #-----------------------------#
+#-----------------------------#
+#GROMACS ENVIRONMENT
+export PATH=\$PATH:$path/bin
+#-----------------------------#
 EOF3
        else
-       echo " Gromacs Installation Failed";exit #--------- IF 3 Ends
+       echo "$bold $red Gromacs Installation Failed $rst";exit #--------- IF 3 Ends
        fi   
   else
-  echo " Gromacs Compilation failed. ! ";exit
+  echo "$bold $red Gromacs Compilation failed. ! $rst ";exit
   fi                                      #--------------- IF 2 Ends
 else
-echo " Gromacs Configuration failed. !" ;exit #----------- IF1 ends
+echo "$bold $red Gromacs Configuration failed. !$rst" ;exit #----------- IF1 ends
 fi
 }
 #----------------------------------------------------------
@@ -191,6 +205,7 @@ patch_plumed $patch
 #------------------------
 #path=`pwd`
 install_gromacs $mpi
+rm null 
 #-------------------------------------------#
-# Written By ANJI BABU KAPAKAYALA           #
+echo "$bold $blu  Written By ANJI BABU KAPAKAYALA $rst"
 #-------------------------------------------#
