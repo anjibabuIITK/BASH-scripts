@@ -97,6 +97,9 @@ echo "$bold $red ERROR in Patching $rst"
 fi
 else
 echo "$bold $red Plumed  NOT FOUND.! $rst"
+echo "$bold $red USE THIS COMMAND TO INSTALL PLUMED.! $rst"
+echo "$bold $blu sh Install_gromacs.sh -f <tar/zip file> -i install_plumed $rst"
+echo "$bold $ylw Bye !!!! $rst"
 rm null
 exit
 fi;;
@@ -179,20 +182,58 @@ EOF
 #*) echo "UNKNOWN KWY WORD" ;exit;;
 #esac
 }
-#--------------------------------------------
+#---------------------INSTALL PLUMED
+function install_plumed() {
+case "$1" in
+install_plumed|plumed_install)
+path=`pwd`
+#echo "$PATH"
+echo "$bold $grn Configuring $folder...$rst [$red Please wait$rst$grn]$rst"
+./configure --prefix=$path &>null
+                 if [ $? -eq '0' ] ;then    #-------------------if2 starts
+                        echo "$bold $grn Configuration Done. $rst"
+                        source $path/sourceme.sh
+                        echo " $bold $grn Source sourceme.sh Done !.$rst"
+			echo "$bold $grn Compiling $folder...$rst [$red Please wait$rst$grn]$rst"
+                        make -j 10 &>null
+                                if [ $? -eq '0' ] ;then   #---------------if3 starts
+                                        echo "$bold $grn Complilation Successful. ! $rst"
+					echo "$bold $grn Installing $folder...$rst [$red Please wait$rst$grn]$rst"
+                                        make install &>null
+                                                if [ $? -eq '0' ] ;then  #------------If4 starts
+                                                        echo "$bold $grn Installation Successful. ! $rst"
+cat >> ~/.bashrc << EOF
+#------------------------
+#  PLUMED PATH
+source $path/sourceme.sh
+EOF
+                                                else
+                                                        echo "$bold $red Installation Failed. ! $rst";exit
+                                                fi                     #---------------IF4 ends 
+
+                                else
+                                        echo "$bold $red Compilation Failed. ! $rst";exit
+                                fi                                      #----------------IF3 ends
+                else
+                        echo "$bold $red Configuration Failed. !$rst";exit   #--------------If2 Ends
+                fi
+;;
+*)echo "$bold $blue KNOWN KEY WORD..! $rst";exit;;esac
+}
+#-----------------------------------------------------------
 case "$1" in
    --help|--usage) header " BASH SCRIPT TO INSTALL GROMACS WITH FEW OPTIONS "
 help_usage;exit ;;
 esac
 #--------------------------------------------
 #     Defining ARGUMENTS
-while getopts f:p:m:h: option
+while getopts f:p:m:i: option
 do
 case "${option}" in
 f) tarfile=$OPTARG;;
 p) patch=${OPTARG};;
 m) mpi=${OPTARG};;
-h) helpp=${OPTARG};;
+i) plumed_key=${OPTARG};;
 esac
 done
 #-------------------------------MAIN PROGRAM
@@ -200,6 +241,8 @@ header "GROMACS INSTALLATION"
 cmake_test 
 extract_file $tarfile 
 cd $folder
+#-----------INSTALL PLUMED
+install_plumed $plumed_key
 #-----------PATCH PLUMED
 patch_plumed $patch
 #------------------------
