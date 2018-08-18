@@ -102,7 +102,7 @@ fi
 #---------------------
 function patch_plumed() {
 case "$1" in
- patch_plumed)
+ patch_plumed|plumed_patch)
 plumed -h &>null
 if [ $? -eq '0' ];then
 echo "$bold $grn Plumed Found. !$rst"
@@ -111,11 +111,11 @@ rm null
 #============================#
 #   PATCHING WITH PLUMED     #
 #============================#
-plumed-patch -p &>null & << EOF
+plumed-patch -p &>null << EOF
 4
 EOF
-echo "$red "
-spinner
+#echo "$red "
+#spinner
 if [ $? -eq '0' ];then
 echo "$bold $grn Plumed patched $rst";
 else
@@ -130,7 +130,7 @@ rm null
 exit
 fi;;
 *)
-#echo "Gromacs Installign without plumed "
+echo "$bold $red PATCHING FAILED !. Gromacs Installign without plumed $rst"
 esac
 }
 #-------------------------------
@@ -273,6 +273,25 @@ esac
 case "$1" in
    --help|--usage) header " BASH SCRIPT TO INSTALL GROMACS WITH FEW OPTIONS "
 help_usage;exit ;;
+esac
+#--------------------------------------------
+case "$1" in
+	--clean_gromacs) header "Cleaning Gromacs"
+file="gromacs-5.1.2"
+f3="~/.bashrc"
+if [ -d  $file ];then
+echo "$bold $blue Cleaning $file $rst"
+rm -rf $file &
+echo "$red"
+spinner
+sed -i "$((`wc -l ~/.bashrc|awk '{print $1}'`-3)),$ d" ~/.bashrc   #f3 filename
+echo "$bold $blue Cleaning $file $red Done $rst"
+exit
+else
+echo "$bold $red $file Could not found $rst"
+exit
+fi
+;;
 esac
 #--------------------------------------------
 #     Defining ARGUMENTS
