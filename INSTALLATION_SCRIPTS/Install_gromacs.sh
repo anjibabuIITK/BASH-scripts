@@ -219,6 +219,8 @@ cat << EOF
 	CASE 4: Install plumed with mpi	
 	sh Install_gromacs.sh -f plumed.zip -i install_plumed
 
+	CASE 5 : Clean the gromacs [uninstall]
+	sh Install_gromacs.sh --clean_gromacs
 EOF
 #;;
 #*) echo "UNKNOWN KWY WORD" ;exit;;
