@@ -1,4 +1,4 @@
-## Bash Script to generate required input files to run REMD sumulation using Gromacs
+##  ADMIN TOOL is a package to perform the basic server admistration tasks
  
  
  AUTHOUR : KAPAKAYALA ANJI BABU
