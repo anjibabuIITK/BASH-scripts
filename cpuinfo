@@ -1,0 +1,46 @@
+#!/bin/bash
+#------TEXT COLORS
+red=`tput setaf 1`
+grn=`tput setaf 2`
+ylw=`tput setaf 3`
+blue=`tput setaf 4`
+pur=`tput setaf 5`
+bold=`tput bold`
+rst=`tput sgr0`
+#---------------------------------------#
+if [ $# -eq 0 ]; then
+   echo "$bold$red node name expected.!$rst"
+   echo "$bold$grn exmple: cpuinfo master$rst";echo
+   exit
+fi
+node=$1
+#---------------------------------------------------#
+#
+total_cpus=52
+runs=`qstat -an |grep "${node}/"|wc -l`
+multi_cpus=`qstat -an |grep "${node}/"|grep "*"|wc -l`
+single_cpus=`expr $runs - $multi_cpus`
+#---------------------------------------------------#
+multi_list=`qstat -an |grep "${node}/"|grep "*"|cut -d "*" -f2`
+j=0
+for i in $multi_list;do
+j=`expr $j + $i`
+done
+#
+j=`expr $j + $single_cpus`
+free_cpus=`expr $total_cpus - $j`
+#echo "$j"
+#---------------------------------------------------#
+echo
+echo "$bold $red Welcome to Perth GPU Server$rst"
+echo "$bold $blue Node        :  $rst$grn $node  $rst"
+echo "$bold $blue Total CPUs  :  $rst$grn $total_cpus $rst"
+echo "$bold $blue Running CPUs:  $rst$grn $j $rst"
+echo "$bold $blue Free CPUs   :  $rst$grn $free_cpus$rst"
+echo ""
+echo "$bold $pur ---$rst"
+echo "$bold $pur Admin, NNLAB$rst";echo
+#---------------------------------------------------#
+# Anji Babu Kapakayala, IIT Kanpur
+#---------------------------------------------------#
+
