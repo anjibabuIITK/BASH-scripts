@@ -1,0 +1,88 @@
+#--------------------------------------------------#
+# This is shell script to extract the basic details 
+# about the GPUS. 
+# 
+# Authour: Anji Babu Kapakayala
+#--------------------------------------------------#
+#!/bin/bash
+#------TEXT COLORS
+red=`tput setaf 1`
+grn=`tput setaf 2`
+ylw=`tput setaf 3`
+blue=`tput setaf 4`
+pur=`tput setaf 5`
+bold=`tput bold`
+rst=`tput sgr0`
+#--------------------------------------------------#
+function print_help() {
+cat << EOF
+#-----------------------------------------------------------#
+$bold$pur Welcome to Perth GPU Server, NNLAB$rst
+
+$bold$grn gpuinfo $rst is a command to extrat the 
+  necessary details about GPUs.
+#-----------------------------------------------------------#
+$bold$pur Admin, NNLAB$rst
+
+EOF
+
+}
+#--------------------------------------------------#
+  case $1 in
+    -h|help|--help)
+    print_help
+    exit
+     ;;
+  esac
+#------------------------------------#
+# GPU utility
+utly=(`nvidia-smi |grep "%"|awk '{print $13}'`)
+# GpU id
+gpu_id=(`nvidia-smi|grep -A10 "PID"|awk '{print $2}'|sed -n '3,$p'`)
+gpus=`nvidia-smi|grep -A10 "PID"|awk '{print $2}'|sed -n '3,$p'|wc -l`
+ngpus=`expr $gpus - 2`
+rgpus=`expr $gpus - 1`
+free_gpus=`expr 8 - $rgpus`
+#Process name
+process=(`nvidia-smi|grep -A10 "PID"|awk '{print $5}'|sed -n '3,$p'`)
+#PID
+pid=(`nvidia-smi|grep -A10 "PID"|awk '{print $3}'|sed -n '3,$p'`)
+#---------------------------------------------------#
+function show() {
+cat << EOF
+   $1    $2       $3       $bold$grn $4$rst$bold$red       $5$rst
+EOF
+#
+}
+#--------------------------------------------------#
+function header() {
+cat << EOF
+#-----------------------------------------------------------#
+#$bold$pur Total GPUS: $grn 8     $pur RUNNING:$grn $1 $pur   FREE: $grn $2 $rst    
+#-----------------------------------------------------------#
+#$bold GPU   PID         PROCESS        USER        GPU-Utilitty$rst
+#-----------------------------------------------------------#
+EOF
+}
+#--------------------------------------------------#
+function footer() {
+cat << EOF
+#-----------------------------------------------------------#
+$bold$pur Admin, NNLAB$rst
+
+EOF
+
+}
+#--------------------------------------------------#
+header $rgpus $free_gpus
+for i in `seq 0 1 $ngpus`;do
+user0=`ps -o uname= -p ${pid[$i]}`
+data=(${gpu_id[$i]} ${pid[$i]} ${process[$i]} ${user0} ${utly[${gpu_id[$i]}]})
+show ${data[*]}
+done
+footer
+#--------------------------------------------------#
+#   ANJI BABU KAPAKAYALA, IIT KANPUR
+#        25 FEB 2022
+#--------------------------------------------------#
+
