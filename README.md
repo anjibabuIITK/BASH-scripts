@@ -1,7 +1,8 @@
-# BASH-scripts
-Some of my useful Bash scripts
+# BASH Scripts
 
-By
+    Bash scripts to be used for analysis and easy tasks.
 
-ANJI BABU KAPAKAYALA
-IIT KANPUR ,INDIA
+
+
+    ANJI BABU KAPAKAYALA
+    IIT KANPUR ,INDIA
